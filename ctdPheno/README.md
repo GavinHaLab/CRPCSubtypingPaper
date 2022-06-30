@@ -2,7 +2,7 @@
 
 ctdPheno is a probabilistic approach for classifying tumor phenotypes from circulating tumor DNA (ctDNA). 
 
-Publication/reference: awaiting DOI...
+Publication/reference: https://doi.org/10.1101/2022.06.21.496879
 
 ## Description
 The key features of ctdPheno is that it accounts for the ctDNA fraction (i.e. tumor fraction estimated by [ichorCNA](https://github.com/GavinHaLab/ichorCNA)) to adjust the expected signals for the tumor phenotype and the non-tumor cfDNA component.
