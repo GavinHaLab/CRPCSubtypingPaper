@@ -1,6 +1,6 @@
 # Advanced prostate cancer phenotype analysis using ctDNA
 Repository for code used in data analysis of  
-<i>De Sarkar, N.\*, Patton, RD.\*, et al. "Nucleosome patterns in circulating tumor DNA reveal transcriptional regulation of advanced prostate cancer phenotypes." (Unpublished)"</i>
+<i>De Sarkar, N.\*, Patton, RD.\*, et al. "Nucleosome patterns in circulating tumor DNA reveal transcriptional regulation of advanced prostate cancer phenotypes." bioRxiv. June 25, 2022. doi: https://doi.org/10.1101/2022.06.21.496879</i>
 
 <hr>
 
