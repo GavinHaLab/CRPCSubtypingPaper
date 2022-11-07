@@ -1,0 +1,55 @@
+#config.yaml for unmap_and_subtract_mouse.snakefile and realign_bam_paired.snakefile
+#Anna-Lisa Doebley
+#Ha Lab
+#Fred Hutchinson Cancer Research Center
+
+###MODIFIED for fastq input
+lanes:
+  - lane1
+  - lane2
+  - lane3
+  - lane4
+
+#SELECT CORRECT REFERENCE GENOME
+#if the input is a cram file, specify the reference gnenome
+input_reference_genome: Homo_sapiens_assembly38.fasta
+#input_reference_genome: 'null' #for bam file input
+
+#location of the concatref genome for mouse subtraction
+ConcatRef_genome:
+    GRCh38_plus_NCBI_GRCm38.fa
+
+#reference genome for realignment, with index files in same folder as .fa file
+human_reference_genome:
+   GRCh38.fa
+
+tag: NCBI_GRCm38 #option used by Anna-Lisa in her projects
+
+#specify a path for the logs and results
+results_path: realignment_results
+
+#SELECT CORRECT POLYMORPHIC SITES
+known_polymorphic_sites1:
+    dbsnp_151_hg38_with_chr.All_20180418.vcf.gz
+
+known_polymorphic_sites2:
+    Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+
+#SELECT IF DATA IS WHOLE GENOME SEQUENCES OR NOT (True or False)
+#determines if rule get_wgs_metrics is run
+is_wgs: True
+
+#SELECT CORRECT BASE RECALIBRATOR GAP OPEN PENALTY
+#GATK recommends 40 for exomes and 30 for whole genomes
+base_recalibrator_gap_open_penalty: 30.0
+
+#can adjust the number of threads used for bwa based on the data
+#suggested this matches cluster_slurm.yaml ncpus for map_to_reference rule
+bwa_threads: 4
+
+#tools used.  need to be module loaded first.  see snakemake file for loads
+bwa: /app/software/BWA/0.7.17-foss-2018b/bin/bwa
+samtools: /app/software/SAMtools/1.10-GCCcore-8.3.0/bin/samtools
+java: /app/software/Java/11.0.2/bin/java
+gatk: /app/software/GATK/4.1.4.1-GCCcore-8.3.0-Java-11/gatk
+picard_jar: $EBROOTPICARD/picard.jar
