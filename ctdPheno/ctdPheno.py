@@ -636,60 +636,46 @@ def subset_data(df, sub_list):
 
 def main():
     test_data = 'emseq'  # bench or patient_ULP/WGS or freed or triplet
-    # LuCaP dataframe - data is formatted in the "ExploreFM.py" pipeline
-    pickl = '/fh/fast/ha_g/user/rpatton/LuCaP_data/Exploration/LuCaP_FM.pkl'
+    # LuCaP dataframe - must contain the same features as healthy/test data
+    pickl = 'LuCaP_FM.pkl'
     print("Loading " + pickl)
     df = pd.read_pickle(pickl)
     df = df.drop('LB-Phenotype', axis=1)
     df = df.rename(columns={'PC-Phenotype': 'Subtype'})
     df = df[df['Subtype'] != 'AMPC']
     df = df[df['Subtype'] != 'ARlow']
-    df = df[df.columns.drop(list(df.filter(regex='shannon-entropy')))]
-    df_lucap = df[df.columns.drop(list(df.filter(regex='mean-depth')))]
-    # Healthy dataframe - data is formatted in the "ExploreFM.py" pipeline
-    pickl = '/fh/fast/ha_g/user/rpatton/HD_data/Exploration/Healthy_FM.pkl'
+    # Healthy dataframe
+    pickl = 'Healthy_FM.pkl'
     print("Loading " + pickl)
     df = pd.read_pickle(pickl)
     df.insert(0, 'Subtype', 'Healthy')
-    df = df[df.columns.drop(list(df.filter(regex='shannon-entropy')))]
-    df_hd = df[df.columns.drop(list(df.filter(regex='mean-depth')))]
-    # Patient dataframe - data is formatted in the "ExploreFM.py" pipeline
+    # Patient dataframe
     if test_data == 'patient_WGS':
-        labels = pd.read_table('/fh/fast/ha_g/user/rpatton/patient-WGS_data/WGS_TF_hg19.txt',
-                               sep='\t', index_col=0, names=['TFX'])
-        pickl = '/fh/fast/ha_g/user/rpatton/patient-WGS_data/Exploration/Patient_FM.pkl'
+        labels = pd.read_table('WGS_TF_hg19.txt', sep='\t', index_col=0, names=['TFX'])
+        pickl = 'Patient_FM.pkl'
         print("Loading " + pickl)
         df = pd.read_pickle(pickl)
         df = pd.merge(labels, df, left_index=True, right_index=True)
         df['Subtype'] = 'ARPC'
-        # truths = pd.read_table('/fh/fast/ha_g/user/rpatton/references/patient_subtypes.tsv',
+        # truths = pd.read_table('patient_subtypes.tsv',
         #                        sep='\t', index_col=0, names=['Subtype'])
         # df = pd.merge(truths, df, left_index=True, right_index=True)
-        df = df[df.columns.drop(list(df.filter(regex='shannon-entropy')))]
-        df_patient = df[df.columns.drop(list(df.filter(regex='mean-depth')))]
-        ordering = pd.read_table('/fh/fast/ha_g/user/rpatton/ML_testing/Generative/Samples_WGS.txt',
-                                 sep='\t', index_col=0, header=None)
     elif test_data == 'patient_ULP':
-        labels = pd.read_table('/fh/fast/ha_g/user/rpatton/patient-ULP_data/ULP_TF_hg19.txt',
-                               sep='\t', index_col=0, names=['TFX'])
-        pickl = '/fh/fast/ha_g/user/rpatton/patient-ULP_data/Exploration/Patient_FM.pkl'
+        labels = pd.read_table('ULP_TF_hg19.txt', sep='\t', index_col=0, names=['TFX'])
+        pickl = 'Patient_FM.pkl'
         print("Loading " + pickl)
         df = pd.read_pickle(pickl)
         df = pd.merge(labels, df, left_index=True, right_index=True)
         df['Subtype'] = 'ARPC'
-        # truths = pd.read_table('/fh/fast/ha_g/user/rpatton/references/patient_subtypes.tsv',
+        # truths = pd.read_table('patient_subtypes.tsv',
         #                        sep='\t', index_col=0, names=['Subtype'])
         # df = pd.merge(truths, df, left_index=True, right_index=True)
-        df = df[df.columns.drop(list(df.filter(regex='shannon-entropy')))]
-        df_patient = df[df.columns.drop(list(df.filter(regex='mean-depth')))]
-        ordering = pd.read_table('/fh/fast/ha_g/user/rpatton/ML_testing/Generative/Samples_ULP.txt',
-                                 sep='\t', index_col=0, header=None)
     elif test_data == 'patient_freed':
-        pickl = '/fh/fast/ha_g/user/rpatton/Freedman_data/Exploration/Freedman_FM.pkl'
+        pickl = 'Freedman_FM.pkl'
         print("Loading " + pickl)
         df_patient = pd.read_pickle(pickl)
     elif test_data == 'triplet':
-        pickl = '/fh/fast/ha_g/user/rpatton/Triplets/Exploration/Triplets.pkl'
+        pickl = 'Triplets.pkl'
         print("Loading " + pickl)
         df_patient = pd.read_pickle(pickl)
         df_patient = df_patient.rename(columns={'NEPC': 'Subtype'})
@@ -698,7 +684,7 @@ def main():
         df_patient = df_patient[~df_patient.index.str.contains('49_')]
         df_patient = df_patient[~df_patient.index.str.contains('93_')]
     elif test_data == 'crpc':
-        pickl = '/fh/fast/ha_g/user/rpatton/CRPC_RA/Exploration/ra-crpc_FM_curated.pkl'
+        pickl = 'ra-crpc_FM_curated.pkl'
         print("Loading " + pickl)
         df_patient = pd.read_pickle(pickl)
         df_patient = df_patient[~df_patient.index.str.contains('KP')]
@@ -708,27 +694,11 @@ def main():
         df_patient = df_patient[~df_patient.index.str.contains('23965W')]
         df_patient = df_patient[~df_patient.index.str.contains('17330O')]
         ordering = None
-    elif test_data == 'emseq':
-        pickl = '/fh/fast/ha_g/user/rpatton/EMSeq/Exploration/EMseq_FM.pkl'
-        print("Loading " + pickl)
-        df_patient = pd.read_pickle(pickl)
-        df_patient = df_patient[~df_patient.index.str.contains('176')]
-        ordering = None
-    elif test_data == 'beltran':
-        pickl = '/fh/fast/ha_g/user/rpatton/beltran/Exploration/beltran_FM_curated.pkl'
-        print("Loading " + pickl)
-        df_patient = pd.read_pickle(pickl)
-        ordering = None
-    elif test_data == 'emseq':
-        pickl = '/fh/fast/ha_g/user/rpatton/beltran/Exploration/beltran_FM_curated.pkl'
-        print("Loading " + pickl)
-        df_patient = pd.read_pickle(pickl)
-        ordering = None
     else:  # bench
         print("Loading benchmarking pickles")
-        df_1 = pd.read_pickle('/fh/fast/ha_g/user/rpatton/LuCaP_bench/Exploration/LuCaP_25X.pkl')
-        df_2 = pd.read_pickle('/fh/fast/ha_g/user/rpatton/LuCaP_bench/Exploration/LuCaP_1X.pkl')
-        df_3 = pd.read_pickle('/fh/fast/ha_g/user/rpatton/LuCaP_bench/Exploration/LuCaP_0.2X.pkl')
+        df_1 = pd.read_pickle('LuCaP_25X.pkl')
+        df_2 = pd.read_pickle('LuCaP_1X.pkl')
+        df_3 = pd.read_pickle('LuCaP_0.2X.pkl')
         df_1.insert(0, 'Depth', '25X')
         df_2.insert(0, 'Depth', '1X')
         df_3.insert(0, 'Depth', '0.2X')
@@ -746,10 +716,6 @@ def main():
     df_train = df_train[df_train.columns.drop(list(df_train.filter(regex='Jump-Amplitude')))]
     ####################################################################################################################
     # establish sub data frames
-    # pam50 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/PAM50.txt', header=None)[0].tolist()
-    # pcs37 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/PCS37.txt', header=None)[0].tolist()
-    # pheno46 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/Pheno46.txt', header=None)[0].tolist()
-    # tf404 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/TF404.txt', header=None)[0].tolist()
     # run experiments
     print("Running experiments . . .")
     # features = ['ATAC-TFBS', 'ATAC-TF', 'ATAC-TF-HD', 'TFBS', 'GB_amplitude-ratio', 'ATAC-amp']
