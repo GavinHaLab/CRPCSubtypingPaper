@@ -492,27 +492,27 @@ def main():
     test_name = 'bench'  # LuCaP or bench
     model_type = 'XGBoost'  # 'XGBoost, etc.
     if test_name == 'LuCaP':
-        results_direct = '/fh/fast/ha_g/user/rpatton/ML_testing/LuCaP/'
+        results_direct = 'ML_testing/LuCaP/'
         if not os.path.exists(results_direct): os.makedirs(results_direct)
         comparisons = {'PC-Phenotype': ['ARPC', 'NEPC']}
-        pickl = '/fh/fast/ha_g/user/rpatton/LuCaP_data/Exploration/LuCaP_FM.pkl'
+        pickl = 'LuCaP_FM.pkl'
         # data is formatted in the "ExploreFM.py" pipeline
         print("Loading " + pickl)
         df = pd.read_pickle(pickl)
     elif test_name == 'bench':
-        results_direct = '/fh/fast/ha_g/user/rpatton/ML_testing/LuCaP_benchmarking/'
+        results_direct = 'ML_testing/LuCaP_benchmarking/'
         if not os.path.exists(results_direct): os.makedirs(results_direct)
         comparisons = {'PC-Phenotype': ['ARPC', 'NEPC']}
-        pickl = '/fh/fast/ha_g/user/rpatton/LuCaP_bench/Exploration/LuCaP_25X.pkl'
+        pickl = 'LuCaP_25X.pkl'
         # data is formatted in the "ExploreFM.py" pipeline
         print("Loading " + pickl)
         df = pd.read_pickle(pickl)
     else:  # e.g. mix
-        results_direct = '/fh/fast/ha_g/user/rpatton/ML_testing/LuCaP_Healthy/'
+        results_direct = 'ML_testing/LuCaP_Healthy/'
         if not os.path.exists(results_direct): os.makedirs(results_direct)
         comparisons = {'Phenotype': ['ARPC', 'NEPC', 'Healthy']}
-        pickl_1 = '/fh/fast/ha_g/user/rpatton/LuCaP_data/Exploration/LuCaP_FM.pkl'
-        pickl_2 = '/fh/fast/ha_g/user/rpatton/HD_data/Exploration/Healthy_FM.pkl'
+        pickl_1 = 'LuCaP_FM.pkl'
+        pickl_2 = 'Healthy_FM.pkl'
         print("Loading " + pickl_1)
         df_1 = pd.read_pickle(pickl_1)
         df_1 = df_1.rename(columns={'PC-Phenotype': 'Phenotype'})
@@ -536,12 +536,7 @@ def main():
     df = df[df.columns.drop(list(df.filter(regex='ADLoss')))]
     ####################################################################################################################
     # establish sub data frames
-    # pam50 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/PAM50.txt', header=None)[0].tolist()
-    # pcs37 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/PCS37.txt', header=None)[0].tolist()
-    # ccp31 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/CCP31.txt', header=None)[0].tolist()
-    pheno46 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/Pheno46.txt', header=None)[0].tolist()
-    tf404 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/TF404.txt', header=None)[0].tolist()
-    ar10 = pd.read_table('/fh/fast/ha_g/user/rpatton/references/AR10.txt', header=None)[0].tolist()
+    # tf404 = pd.read_table('TF404.txt', header=None)[0].tolist()
     # run experiments
     print("Running experiments . . .")
     for comparison, test_list in comparisons.items():
