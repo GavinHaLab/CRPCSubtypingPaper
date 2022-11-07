@@ -1,1 +1,12 @@
-Contains features from patient data used in the ctdPheno and Keraon methods
+### Contains data/features used in ctdPheno, Keraon, and unsupervised classification methods:
+  - GriffinFeatureMatrix_WGS.tsv (*Griffin*-based features for UW cohort and DFCI cohort II - WGS)
+  - GriffinFeatureMatrix_ULP.tsv (*Griffin*-based features for UW cohort and DFCI cohort II - ULP)
+  - GriffinFeatureMatrix_DFCI1.tsv (*Griffin*-based features for DFCI cohort I - ULP)
+  - GriffinFeatureMatrix_Triplets.tsv (*Griffin*-based features for 25x mixed phenotype admixtures)
+  - GriffinFeatureMatrix_LuCaP.tsv (*Griffin*-based features for LuCaP [prostate cancer phenotype] anchors)
+  - GriffinFeatureMatrix_HealthyDonor.tsv (*Griffin*-based features for LuCaP [prostate cancer phenotype] anchors)
+  - DFCI1_TFX_Subtypes.tsv (*IchorCNA* tumor fraction estimates and known histologies for DFCI cohort I)
+  - LuCaP_subtypes.tsv (LuCaP PDX phenotypes)
+  - patient_subtypes.tsv (known patient histologies for UW cohort and DFCI cochort II)
+  - ULP_TF_hg19.txt (*IchorCNA* tumor fraction estimates for UW cohort and DFCI cohort II - ULP)
+  - WGS_TF_hg19.txt (*IchorCNA* tumor fraction estimates for UW cohort and DFCI cohort II - WGS)
