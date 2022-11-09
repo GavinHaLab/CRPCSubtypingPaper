@@ -1,3 +1,4 @@
+Sample  PC-phenotype  PAM50-phenotype PSMA-status
 77	AMPC	LumA	NA
 77CR	AMPC	LumA	+
 23-1	AMPC	LumA	+
